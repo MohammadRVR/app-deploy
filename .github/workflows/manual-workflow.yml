@@ -1,0 +1,22 @@
+name: manual-workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment: 
+        description: "Target Environment"
+        default: dev
+        required: false
+      version:
+        description: "Application Version"
+        required: true
+
+jobs:
+  run-manual:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print input values
+        run: |
+          echo "Environment: ${{ github.event.inputs.environment }}"
+          echo "Version: ${{ github.event.inputs.version }}"
+      
