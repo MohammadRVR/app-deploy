@@ -1,0 +1,26 @@
+name: Conditional CI Pipeline
+
+on: 
+  push:
+    branches:
+      - main
+      - 'feature/*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v3
+      - name: build step
+        run: |
+          echo "this is a build step in build job"
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    if: startsWith(github.ref,'refs/heads/feature') && success()
+    steps:
+      - name: test step
+        run: |
+          echo "Test step in test job"
